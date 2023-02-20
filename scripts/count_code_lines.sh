@@ -1,47 +1,47 @@
 #!/bin/bash
 
-TARGET_PATH="$1"
-EXTENSIONS="$2"
-EXCLUDE_PATHS=${3:-"node_modules,.git,dist,build"}
+target_path="$1"
+extensions="$2"
+exclude_paths=${3:-"node_modules,.git,dist,build"}
 
-if [ "$TARGET_PATH" = "" ]; then
-  read -p "Path: " TARGET_PATH
+if [ "$target_path" = "" ]; then
+  read -p "Path: " target_path
 fi
 
-if [ "$TARGET_PATH" = "" ]; then
+if [ "$target_path" = "" ]; then
   echo "Missing Path. Aborting..."
   exit 1
 fi
 
-if [ "$EXTENSIONS" = "" ]; then
-  read -p "File Extensions (Comma Separated Values): " EXTENSIONS
+if [ "$extensions" = "" ]; then
+  read -p "File Extensions (Comma Separated Values): " extensions
 fi
 
-if [ "$EXTENSIONS" = "" ]; then
+if [ "$extensions" = "" ]; then
   echo "Missing Extensions. Aborting..."
   exit 1
 fi
 
-echo "Find files by extensions: $EXTENSIONS"
-echo "Exclude Paths: $EXCLUDE_PATHS"
+echo "Find files by extensions: $extensions"
+echo "Exclude Paths: $exclude_paths"
 
-FIND_EXCLUDE_PATHS=''
-for EXCLUDE_PATH in $(echo $EXCLUDE_PATHS | tr ',' ' ')
+find_exclude_paths=''
+for exclude_path in $(echo $exclude_paths | tr ',' ' ')
 do
-  FIND_EXCLUDE_PATHS="$FIND_EXCLUDE_PATHS -not -path */$EXCLUDE_PATH*"
+  find_exclude_paths="$find_exclude_paths -not -path */$exclude_path*"
 done
 
-TOTAL_OF_LINES=0
-EXTENSIONS=$(echo $EXTENSIONS | sed 's/,/\\|/g')
-FILES=$(find $TARGET_PATH -iregex ".*\.\($EXTENSIONS\)" $FIND_EXCLUDE_PATHS)
+total_of_lines=0
+extensions=$(echo $extensions | sed 's/,/\\|/g')
+files=$(find $target_path -iregex ".*\.\($extensions\)" $find_exclude_paths)
 
-for FILE in $FILES
+for file in $files
 do
-  NUMBER_OF_LINES=$(wc -l $FILE | awk '{print $1}')
-  TOTAL_OF_LINES=$(echo "$TOTAL_OF_LINES + $NUMBER_OF_LINES" | bc)
+  number_of_lines=$(wc -l $file | awk '{print $1}')
+  total_of_lines=$(echo "$total_of_lines + $number_of_lines" | bc)
 done
 
-NUMBER_OF_FILES=$(if [ "$FILES" = "" ]; then echo 0; else echo $FILES" " | tr -cd ' \t' | wc -c | awk '{print $1}'; fi)
+number_of_files=$(if [ "$files" = "" ]; then echo 0; else echo $files" " | tr -cd ' \t' | wc -c | awk '{print $1}'; fi)
 
-echo "Number of Files: $NUMBER_OF_FILES"
-echo "Total of Lines: $TOTAL_OF_LINES"
+echo "Number of Files: $number_of_files"
+echo "Total of Lines: $total_of_lines"
