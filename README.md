@@ -9,6 +9,8 @@ This repository contains some bash scripts created for study purposes.
 - `whoami` - Use the whoami command to show the currently logged-in user for the shell session.
 - `wc` - The wc (word count) command counts the number of lines, words, and bytes in a file.
 - `tr` - The tr command is used to translate or delete characters.
+- `whatis` - You can use whatis to describe a command in one line.
+- `bc` - An arbitrary precision calculator language.
 
 ## :link: Useful Links
 
