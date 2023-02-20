@@ -12,6 +12,13 @@ This repository contains some bash scripts created for study purposes.
 - `whatis` - You can use whatis to describe a command in one line.
 - `bc` - An arbitrary precision calculator language.
 
+## :nerd_face: Scripts
+
+- [count_lines.sh](./scripts/count_lines.sh)
+- [disk_usage.sh](./scripts/disk_usage.sh)
+- [readable_wc.sh](./scripts/readable_wc.sh)
+- [say_hello.sh](./scripts/say_hello.sh)
+
 ## :link: Useful Links
 
 - https://phoenixnap.com/kb/linux-commands
