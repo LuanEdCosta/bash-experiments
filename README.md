@@ -8,6 +8,7 @@ This repository contains some bash scripts created for study purposes.
 - `hostname` - To check the DNS name of the current machine.
 - `whoami` - Use the whoami command to show the currently logged-in user for the shell session.
 - `wc` - The wc (word count) command counts the number of lines, words, and bytes in a file.
+- `tr` - The tr command is used to translate or delete characters.
 
 ## :link: Useful Links
 
