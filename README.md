@@ -14,6 +14,7 @@ This repository contains some bash scripts created for study purposes.
 
 ## :nerd_face: Scripts
 
+- [count_lines_chatgpt.sh](./scripts/count_lines_chatgpt.sh)
 - [count_lines.sh](./scripts/count_lines.sh)
 - [disk_usage.sh](./scripts/disk_usage.sh)
 - [readable_wc.sh](./scripts/readable_wc.sh)
