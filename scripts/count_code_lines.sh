@@ -2,6 +2,7 @@
 
 TARGET_PATH="$1"
 EXTENSIONS="$2"
+EXCLUDE_PATHS=${3:-"node_modules,.git,dist,build"}
 
 if [ "$TARGET_PATH" = "" ]; then
   read -p "Path: " TARGET_PATH
@@ -13,7 +14,7 @@ if [ "$TARGET_PATH" = "" ]; then
 fi
 
 if [ "$EXTENSIONS" = "" ]; then
-  read -p "File Extensions: " EXTENSIONS
+  read -p "File Extensions (Comma Separated Values): " EXTENSIONS
 fi
 
 if [ "$EXTENSIONS" = "" ]; then
@@ -21,11 +22,18 @@ if [ "$EXTENSIONS" = "" ]; then
   exit 1
 fi
 
-echo "Filtering by file extensions: $EXTENSIONS"
+echo "Find files by extensions: $EXTENSIONS"
+echo "Exclude Paths: $EXCLUDE_PATHS"
+
+FIND_EXCLUDE_PATHS=''
+for EXCLUDE_PATH in $(echo $EXCLUDE_PATHS | tr ',' ' ')
+do
+  FIND_EXCLUDE_PATHS="$FIND_EXCLUDE_PATHS -not -path */$EXCLUDE_PATH*"
+done
 
 TOTAL_OF_LINES=0
-EXTENSIONS="$(echo $EXTENSIONS | sed 's/,/\\|/g')\\"
-FILES=$(find $TARGET_PATH -iregex ".*\.\($EXTENSIONS)")
+EXTENSIONS=$(echo $EXTENSIONS | sed 's/,/\\|/g')
+FILES=$(find $TARGET_PATH -iregex ".*\.\($EXTENSIONS\)" $FIND_EXCLUDE_PATHS)
 
 for FILE in $FILES
 do
@@ -34,5 +42,6 @@ do
 done
 
 NUMBER_OF_FILES=$(if [ "$FILES" = "" ]; then echo 0; else echo $FILES" " | tr -cd ' \t' | wc -c | awk '{print $1}'; fi)
+
 echo "Number of Files: $NUMBER_OF_FILES"
 echo "Total of Lines: $TOTAL_OF_LINES"
